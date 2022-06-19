@@ -1,0 +1,8 @@
+.info-box-content{
+    margin-left: 0;
+}
+.send-to-vendor{
+    width: calc(100% - 15%);
+    margin: 0 auto;
+    display: inherit;
+}

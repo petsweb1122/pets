@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'font-awesome' => '/front/css/font-awesome.css',
+    'fontawesome' => '/front/css/font-awesome.css',
+    'jquery_ui' => 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css',
+    'main' => 'front/css/main.css',
+    'm_main' => 'front/css/m_main.css',
+    'login' => 'front/css/login.css',
+    'home' => 'front/css/home.css',
+    'single_product' => 'front/css/single_product.css',
+    'bootstrap_min' => 'front/css/bootstrap.min.css',
+    'category_bar' => 'front/css/category-bar.css',
+    'shop_by_category' => '/front/css/shop_by_category.css',
+    'm_template' => '/front/css/m_template.css',
+    'm_home' => '/front/css/m_home.css',
+    'm_template' => '/front/css/m_template.css',
+    'm_navigation' => '/front/css/m_navigation.css',
+    'm_policies' => '/front/css/m_policies.css',
+    'm_top_bar' => '/front/css/m_top_bar.css',
+    'm_footer' => '/front/css/m_footer.css',
+    'slick'     => '/vendor/slick/slick.css',
+    'slick-theme'     => '/vendor/slick/slick-theme.css',
+    'inteltel' => 'css/intlTelInput.min.css',
+    'select2' => 'vendor/select2/dist/css/select2.min.css',
+];

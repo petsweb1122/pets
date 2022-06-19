@@ -1,0 +1,226 @@
+.detail-slider-area .detail-slider.main-slider {
+    margin: 10px;
+}
+
+.slider-nav {
+    height: 60px;
+    margin: 0 10px;
+}
+.slider-nav img {
+    height: auto;
+    width: 45px;
+}
+.product-detail-data {
+    margin: 10px;
+}
+.product-detail-data .main-title {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.2;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.product-detail-data .price-section {
+    overflow: hidden;
+}
+.product-detail-data .price {
+    font-size: 15px;
+    font-weight: 700;
+}
+.product-detail-data .sku {
+    font-size: 14px;
+    font-weight: 400;
+}
+.product-detail-data .color-data {
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+.product-detail-data .color-data .title {
+    font-size: 12px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+.product-detail-data .color-data .color-span {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    position: relative;
+    overflow: hidden;
+}
+/* .product-detail-data .color-data .color-span.active::after {
+    content: "";
+    position: absolute;
+    height: 5px;
+    width: 100%;
+    background: #cdcdcd;
+    bottom: 0;
+} */
+.product-detail-data .color-data .color-span.active {
+    border: 3px solid #4d4a4a;
+    border-radius: 10px;
+}
+
+.product-detail-data .size-data {
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+.product-detail-data .size-data .title {
+    font-size: 12px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+.product-detail-data .size-data .sizes-vals {
+    border: 1px solid #e5e5e5;
+    padding: 3px 25px;
+    position: relative;
+    margin-right: 10px;
+}
+.product-detail-data .size-data .sizes-vals.active {
+    border: 3px solid #4d4a4a;
+}
+.product-detail-data .size-guide {
+    padding: 10px 0px;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    margin-top: 15px;
+    position: relative;
+}
+.product-detail-data .size-guide .title {
+    font-size: 15px;
+    margin-left: 5px;
+}
+.product-detail-data .size-guide .arrow {
+    color: #989a9c;
+    position: absolute;
+    right: 3px;
+    font-size: 13px;
+    top: 12px;
+}
+
+.m-size-guide-panel {
+    position: fixed;
+    background: white;
+    right: -100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    transition: right 0.5s;
+    z-index: 3;
+    overflow-y: scroll;
+}
+.m-size-guide-panel.active {
+    right: 0px;
+    transition: right 0.5s;
+}
+.m-size-guide-panel h3.heading {
+    text-transform: inherit;
+    font-weight: 700;
+    text-align: center;
+    margin: 10px 0;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 10px;
+    font-size: 16px;
+}
+
+.m-size-guide-panel .left.cross-filter-button {
+    font-size: 20px;
+    top: 10px;
+    left: 14px;
+    position: relative;
+}
+
+.m-size-guide-panel .measurement-table h4.heading {
+    margin-left: 10px;
+}
+.m-size-guide-panel .measurement-table {
+    overflow-x: scroll;
+    width: 100%;
+}
+
+.size_fit table tr th {
+    font-size: 13px;
+    padding: 12px 8px;
+}
+
+.size_fit table tr th,
+.size_fit table tr td {
+    border: 1px solid #e5e5e5;
+    text-align: center;
+    padding: 5px 10px;
+}
+.size_fit table tr th {
+    padding: 0px 15px;
+    background: #f6f6f6;
+}
+.description {
+    margin-bottom: 70px;
+}
+.description .title {
+    font-size: 14px;
+    margin-bottom: 7px;
+    display: inline-block;
+    font-weight: bold;
+}
+.description table {
+    width: 100%;
+}
+.description table th {
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+    padding-bottom: 10px;
+}
+.description table td {
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+    padding-bottom: 10px;
+}
+
+.product-detail-data .add-to-bag {
+    background: #222;
+    color: #fff;
+    padding: 12px 0;
+    text-align: center;
+    font-size: 15px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.add-to-bag-error {
+    position: absolute;
+    top: -46px;
+    text-align: left;
+    left: 0;
+    right: 0;
+    padding: 15px 10px;
+    background: #fff;
+    font-size: 13px;
+    color: red;
+    border-top: 1px solid #cdcdcd;
+}
+
+footer {
+    margin-bottom: 40px;
+}
+td.size-values {
+    font-size: 12px;
+}
+.cross-price{
+    color: red;
+    text-decoration: line-through;
+}
+.percentage-value{
+    color: green;
+    font-size: 12px;
+    position: relative;
+    top: -2px;
+    left: 2px;
+}

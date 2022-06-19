@@ -1,0 +1,27 @@
+footer{
+    background: #fafafa;
+    overflow: hidden;
+    padding: 20px 0px;
+}
+footer .social-links h3{
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-size: 18px;
+    text-align: center;
+}
+footer  ul.footer-social-links {
+    overflow: hidden;
+    text-align: center;
+    width: 60px;
+    margin: 0 auto;
+}
+footer .footer-social-links li  svg{
+    font-size: 16px;
+}
+footer .footer-social-links li.insta svg path{
+    color: rgb(131, 58, 180);
+}
+
+
+
+

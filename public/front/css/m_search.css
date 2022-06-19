@@ -1,0 +1,76 @@
+.search-info .total-products {
+    font-size: 13px;
+    display: inline-block;
+    padding: 5px 10px;
+}
+.search-products{
+    overflow: hidden;
+}
+.search-products .card {
+    width: 145px;
+    margin-bottom: 10px;
+    height: 245px;
+}
+
+.search-products .card.left-card {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.search-products .card.right-card {
+    padding-right: 10px;
+}
+.search-products .card .image {
+    height: 194px;
+    overflow: hidden;
+}
+.search-products .card .text-area .price {
+    font-size: 12px;
+}
+.search-products .card .text-area .colors {
+    overflow: hidden;
+    margin-bottom: 10px;
+    margin-top: 3px;
+}
+.search-products .card .text-area .colors span {
+    height: 18px;
+    width: 18px;
+    margin-right: 8px;
+}
+
+.cross-price{
+    color: red;
+    text-decoration: line-through;
+}
+
+@media only screen and (min-width: 360px) {
+    /* For mobile phones: */
+    .search-products .card {
+        width: 165px;
+        height: 270px;
+    }
+    .search-products .card .image {
+        height: 223px;
+    }
+}
+
+@media only screen and (min-width: 375px) {
+    /* For mobile phones: */
+    .search-products .card {
+        width: 172px;
+        height: 275px;
+    }
+    .search-products .card .image {
+        height: 230px;
+    }
+}
+
+@media only screen and (min-width: 411px) {
+    /* For mobile phones: */
+    .search-products .card {
+        width: 190px;
+        height: 300px;
+    }
+    .search-products .card .image {
+        height: 255px;
+    }
+}

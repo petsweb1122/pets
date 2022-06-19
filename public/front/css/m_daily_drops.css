@@ -1,0 +1,48 @@
+.mobile-daily-drops .heading {
+    text-transform: capitalize;
+    font-size: 11px;
+    color: #6f6f6f;
+}
+.card-slides {
+    /* height: 150px; */
+    overflow: hidden;
+}
+.card-slides .mobile-daily-drops-slider {
+    margin: 10px 0px;
+}
+.card-slides .mobile-daily-drops-slider li.list-slider {
+    text-align: left;
+}
+
+.card-slides .mobile-daily-drops-slider li.list-slider  img{
+    height: 120px;
+}
+.card-slides .mobile-daily-drops-slider li.list-slider a {
+    display: inline-block;
+    font-size: 9px;
+    margin-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 93px;
+}
+.card-slides .mobile-daily-drops-slider li.list-slider .price {
+    font-size: 10px;
+    display: inline-block;
+    width: 100%;
+}
+.card-slides .mobile-daily-drops-slider li.list-slider .label {
+    font-size: 12px;
+    background: #fcd771;
+    position: absolute;
+    opacity: .8;
+    width: 40px;
+}
+.card-slides .mobile-daily-drops-slider li.list-slider .label .view-text {
+    padding-left: 13px;
+    font-size: 10px;
+}
+.card-slides .mobile-daily-drops-slider li.list-slider .label .view-text span {
+    display: block;
+    font-size: 9px;
+}

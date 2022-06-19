@@ -1,0 +1,36 @@
+.m-navigation{
+    overflow: hidden;
+}
+.m-navigation ul {
+    overflow-y: scroll;
+    white-space: nowrap;
+    /*border-bottom: 1px solid #cdcdcd;*/
+}
+header .mt-20 {
+    margin-top: 0px;
+}
+
+.wp-27{
+    width: 27%;
+}
+.wp-18{
+    width: 18%;
+}
+.m-navigation ul li{
+    display: inline-block;
+    margin: 0 10px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+.m-navigation ul li.active a{
+    font-weight: 700;
+    border-bottom: 2px solid #222;
+    padding-bottom: 10px;
+}
+.m-navigation ul li a{
+    position: relative;
+    display: inline-block;
+    font-size: 12px;
+    text-transform: uppercase;
+
+}

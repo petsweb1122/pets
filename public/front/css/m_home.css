@@ -1,0 +1,335 @@
+.url-links {
+    overflow: hidden;
+    margin: 0 15px;
+}
+
+.url-links li {
+    margin: 5px 0px;
+    overflow: hidden;
+    position: relative;
+}
+
+.url-links li.list-slider {
+    margin: 10px 0px;
+    margin-bottom: 20px;
+}
+
+.url-links li a h4 {
+    font-size: 14px;
+    font-weight: 400;
+    color: #4286f4;
+    padding: 0 20px;
+}
+.url-links li .frame {
+    width: 69px;
+    height: 90px;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.url-links li .frame img {
+    width: 100%;
+}
+
+.url-links li .data {
+    width: calc(100% - 79px);
+    margin-left: 10px;
+}
+
+.url-links li .data .title {
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #4286f4;
+    display: block;
+    overflow: hidden;
+}
+
+.url-links li .data .price {
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.url-links li .data .product-detail {
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.url-links li .data .product-detail .label {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.url-links li .data .product-detail .data-label {
+    font-size: 12px;
+}
+
+.url-links li .data .view-more-button {
+    color: #4286f4;
+    font-size: 12px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.flash-banner-image{
+    position: relative;
+}
+.flash-banner-image .view-flash-products{
+    position: absolute;
+    left: 0;
+    background: #fff;
+    padding: 10px 0px;
+    text-transform: uppercase;
+    right: 0;
+    margin: 0 auto;
+    width: 122px;
+    text-align: center;
+    font-weight: bold;
+    bottom: 10%;
+    font-size: 11px;
+
+}
+
+
+.slideshow-container {
+    max-width: 100%;
+    position: relative;
+    margin: auto;
+    margin-top: 62px;
+}
+
+.mySlides {
+    display: none;
+  height: auto;
+}
+
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: #222428;
+    font-weight: bold;
+    font-size: 30px;
+    transition: .6s ease;
+    border-radius: 0 3px 3px 0;
+    display: none;
+}
+
+.next {
+    right: 0px;
+    border-radius: 23px 3px 3px 23px
+}
+
+.prev {
+    left: 0px;
+    border-radius: 3px 23px 23px 3px
+}
+
+.prev:hover,
+.next:hover {
+    color: #f2f2f2;
+    background-color: rgba(0, 0, 0, 0.8)
+}
+
+.dot-container{
+	text-align: center;
+    position: relative;
+    margin-top: -40px;
+}
+
+.dot {
+    cursor: pointer;
+    height: 10px;
+    width: 10px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color .6s ease
+}
+
+.active,
+.dot:hover {
+    background-color: #717171
+}
+
+
+.slogan h1{
+	font-size: 60px;
+    background-color: #f4f4f4;
+    padding: 30px;
+    margin: 0 auto 0px;
+    letter-spacing: 4px;
+    word-spacing: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.home-column h3 {
+	font-size: 14px;
+	color: #777;
+	margin: 4px;
+}
+
+
+/* Create three equal home-columns that floats next to each other */
+
+.home-banner{
+	background: #0789c0;
+    color: white;
+    padding: 18px 0px;
+    font-weight: 300 !important;
+    font-size: 18px;
+}
+
+.home-banner *{
+    color: #fff
+}
+
+.home-banner svg{
+	vertical-align: middle
+}
+
+.home-column {
+	/* float: left; */
+	width: 32%;
+	padding: 10px;
+	background-color: #eee;
+	/*height: 250px;*/
+	margin: 2px;
+	display: inline-block;
+}
+
+.home-column img{
+	width:100%
+}
+
+.home-column a {
+	float: none;
+	color: #333;
+	font-weight: normal;
+	padding: 6px 4px;
+	text-decoration: none;
+	display: block;
+	font-size: 16px;
+	border:1px solid #ddd;
+	background:#fefefe;
+}
+
+.home-column a:hover {
+	background-color: #8bc540;
+	color: #fff;
+	padding-bottom: 4px;
+}
+
+
+/* Clear floats after the home-columns */
+
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.hotel-content{
+    text-align: center;
+    border-bottom: 3px solid #ff864f;
+    background: #fff;
+  }
+  
+  .hotel-content div{
+    display: inline-block;
+    width: 20%;
+  }
+  
+  .hotel-content div img{
+    width: 80%;
+  }
+
+/* Responsive layout - makes the three home-columns stack on top of each other instead of next to each other */
+
+@media screen and (max-width: 400px) {
+	.home-column {
+		width: 100%;
+		height: auto;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+		.slogan h1{letter-spacing:0px;word-spacing:20px; font-weight:bold;font-size:24px !important;}
+}
+@media screen and (max-width: 900px) {
+		.slogan h1{letter-spacing:0px;word-spacing:0px; font-weight:bold;font-size:40px}
+}
+
+
+
+
+.carousel {
+  position: relative;
+  width: 86%;
+  height: 150px;
+  margin: 10px auto
+}
+
+.carousel-content {
+  position: relative;
+  overflow: hidden;
+  transition: width .4s;
+  height: 100%;
+}
+
+.slide {
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  text-align:center;
+  transition: left .4s cubic-bezier(.47,.13,.15,.89);
+}
+
+.slide img{
+  width:auto;
+  max-height:120px
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  margin-top: -10px;
+  background-color: rgba(150,150,150,.3);
+  width: 20px;
+  height: 20px;
+  z-index: 2;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  color: white;
+  /*-webkit-user-select: none;*/
+}
+
+.nav-left {
+  left: -25px;
+}
+
+.nav-right {
+  right: -25px;
+}
+
+.carousel-arrow-icon-left {
+  margin-left: 6px;
+  margin-top: -1px;
+}
+
+.carousel-arrow-icon-right {
+  margin-left: 5px;
+  margin-top: -1px;
+}
+
+

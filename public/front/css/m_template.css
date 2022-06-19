@@ -1,0 +1,73 @@
+*{
+    font-family: Roboto,Helvetica,Arial,sans-serif !important;
+    color: #202020;
+    box-sizing: border-box;
+}
+article, aside, blockquote, body, button, code, dd, div, dl, dt, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, input, legend, li, menu, nav, ol, p, pre, section, td, textarea, th, ul {
+    margin: 0;
+    padding: 0;
+}
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+
+body{
+    background: #f6f6f6;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.mt-20{
+    margin-top: 20px;
+}
+.mt-40{
+    margin-top: 40px;
+}
+.display-none{
+    display: none;
+}
+.img-responsive{
+    width: 100%;
+}
+.text-center{
+    text-align: center;
+}
+.clearfix{
+    clear: both;
+}
+.text-right{
+    text-align: right;
+}
+.text-left{
+    text-align: left;
+}
+section{
+    margin: 10px 0;
+}
+.image-height-res{
+    height: 100%;
+    width: auto;
+}
+[class*="col-"] {
+    float: left;
+}
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}

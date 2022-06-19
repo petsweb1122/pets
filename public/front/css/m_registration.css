@@ -1,0 +1,96 @@
+h1.title {
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 16px;
+}
+.registration-form {
+    margin: 0 10px;
+    overflow: hidden;
+    text-align: center;
+}
+.registration-form .form-field {
+    margin-bottom: 10px;
+}
+.registration-form .form-field label {
+    display: block;
+    font-size: 13px;
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+}
+.registration-form .form-field input {
+    width: 100%;
+    padding: 10px 5px;
+    margin-bottom: 15px;
+}
+.registration-form .form-field textarea {
+    width: 100%;
+}
+.registration-form .radio-style input[type="radio"] {
+    width: auto;
+    float: left;
+    margin: 1px 10px;
+}
+.registration-form .radio-style label {
+    display: inline;
+    float: left;
+}
+.registration-form .radio-style {
+    margin:  10px auto;
+}
+.registration-form .radio-style .label-heading{
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.registration-form  .form-field .btn.submit-button{
+    margin-top: 20px;
+    font-weight: 700;
+    background: #333;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    padding: 0px;
+    min-width: 144px;
+    height: 44px;
+    line-height: 42px;
+    font-size: 16px;
+    text-align: center;
+    touch-action: manipulation;
+    cursor: pointer;
+    margin-bottom: 0;
+    border: 1px solid transparent;
+    border-radius: 0;
+    white-space: nowrap;
+    text-transform: uppercase;
+    outline: 0;
+}
+.registration-form  .form-field .btn.submit-button:hover{
+    background: rgba(34,34,34,.8);
+    color: #fff;
+}
+
+
+.label-danger.text-center {
+    background: red;
+    color: white;
+    padding: 5px 0px;
+    border-radius: 3px;
+}
+.label-success.text-center {
+    background: green;
+    color: white;
+    padding: 5px 0px;
+    border-radius: 3px;
+}
+
+
+li.text-danger {
+    font-size: 12px;
+    text-align: left;
+    margin: 4px 0;
+    color: red;
+}

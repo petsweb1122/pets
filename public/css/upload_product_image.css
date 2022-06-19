@@ -1,0 +1,114 @@
+.product-color-images{
+    overflow: hidden;
+}
+
+.product-color-images img{
+    width: 100%;
+    height: auto;
+}
+.images-container {
+    position: relative;
+    width: 230px;
+    height: 330px;
+    overflow: hidden;
+    margin: 0 10px;
+    cursor: pointer;
+}
+/*
+.images-container.remove::after{
+    content: '';
+    height: 150px;
+    width: 6px;
+    position: absolute;
+    z-index: 2;
+    background: red;
+    top: 30%;
+    right: 50%;
+    transform: rotate(40deg);
+}
+.images-container.remove::before{
+    content: '';
+    height: 150px;
+    width: 6px;
+    position: absolute;
+    z-index: 2;
+    background: red;
+    top: 30%;
+    left: 50%;
+    transform: rotate(140deg);
+} */
+/* .images-container.remove:hover::after{
+    content: '';
+    height: 150px;
+    width: 6px;
+    position: absolute;
+    z-index: 2;
+    background: green;
+    top: 30%;
+    right: 50%;
+    transform: rotate(40deg);
+}
+.images-container.remove:hover::before{
+    content: '';
+    height: 60px;
+    width: 6px;
+    position: absolute;
+    z-index: 2;
+    background: green;
+    top: 54%;
+    left: 19%;
+    transform: rotate(140deg);
+} */
+/* .images-container.required::after{
+    content: '';
+    height: 150px;
+    width: 6px;
+    position: absolute;
+    z-index: 2;
+    background: green;
+    top: 30%;
+    right: 50%;
+    transform: rotate(40deg);
+}
+.images-container.required::before{
+    content: '';
+    height: 60px;
+    width: 6px;
+    position: absolute;
+    z-index: 2;
+    background: green;
+    top: 54%;
+    left: 19%;
+    transform: rotate(140deg);
+} */
+.image-container-boundry{
+    float: left;
+    overflow: hidden;
+    height: 400px;
+    text-align: center;
+}
+.image-container-boundry .remove-btn{
+    margin-top: 5px;
+}
+/* .images-container.required:hover::after{
+    content: '';
+    height: 150px;
+    width: 6px;
+    position: absolute;
+    z-index: 2;
+    background: red;
+    top: 30%;
+    right: 50%;
+    transform: rotate(40deg);
+}
+.images-container.required:hover::before{
+    content: '';
+    height: 150px;
+    width: 6px;
+    position: absolute;
+    z-index: 2;
+    background: red;
+    top: 30%;
+    left: 50%;
+    transform: rotate(140deg);
+} */
