@@ -24,12 +24,14 @@ class LeeMarPetSheetsDataComposer
 
         $synced_products = DB::table('products as p')->where('p.vendor_id', $vendor_id)->count();
 
-        $obj_log = DB::table('upload_product_logs as upl')->where('upl.vendor_id',$vendor_id)->where('upl.uploaded_by', 'By Sheets')->first();
-        $total_api_products = $obj_log->total_products;
-        $not_synced = $total_api_products - $synced_products;
+        // $obj_log = DB::table('upload_product_logs as upl')->where('upl.vendor_id',$vendor_id)->where('upl.uploaded_by', 'By Sheets')->first();
+        $count_unsynced = DB::table('vendor_leemarpets as vl')->where('vl.status','not_sync')->count();
+        $total_products = DB::table('vendor_leemarpets as vl')->count();
+
+        $not_synced = $count_unsynced - $synced_products;
 
         $view->with('synced_products', !empty($synced_products) ? $synced_products : 0)
-            ->with('total_api_products', !empty($total_api_products) ? $total_api_products : 0)
-            ->with('not_synced_products', !empty($not_synced) ? $not_synced : 0);
+            ->with('total_api_products', !empty($total_products) ? $total_products : 0)
+            ->with('not_synced_products', !empty($count_unsynced) ? $count_unsynced : 0);
     }
 }

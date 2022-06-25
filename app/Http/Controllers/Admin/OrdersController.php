@@ -36,11 +36,12 @@ class OrdersController extends ViewComposingController
         ->when(!empty($user_data->role != 'super-admin' ), function($q) use($user_data){
             return $q->where('user_id', $user_data->user_id);
         })->count();
-
+        // dd( $find_order);
         if (empty($find_order)) {
             abort(401);
         }
         $get_order_detail = $objOrder->getSingleOrderDetails($id);
+
         if (empty($get_order_detail)) {
             abort(401);
         }
@@ -206,6 +207,7 @@ class OrdersController extends ViewComposingController
     {
         // dd($request->get('vendor_name'));
         $get_vendor = DB::table('vendors as v')->where('v.title', $request->get('vendor_name'))->first();
+        // dd($get_vendor);
 
         if (empty($get_vendor)) {
 
@@ -221,7 +223,7 @@ class OrdersController extends ViewComposingController
             ->where('oi.send_to_vendor', '=', 0)
             ->groupBy('oi.v_id', 'oi.product_id')
             ->get()->toArray();
-
+        // dd($result_items);
         $data_update = array(
             'send_to_vendor' => 1,
             'patch_order_id' => $result->v_order_id + 1
@@ -250,16 +252,25 @@ class OrdersController extends ViewComposingController
         DB::beginTransaction();
         try {
 
+            $orders = $objOrder->createAnOrderForEndlessApi($insert_vendor_orders);
+            dd($insert_vendor_orders);
+            // $update =  DB::table('order_items')->where('v_id', $get_vendor->vendor_id)->where('send_to_vendor', '=', 0)->update($data_update);
 
-            $update =  DB::table('order_items')->where('v_id', $get_vendor->vendor_id)->where('send_to_vendor', '=', 0)->update($data_update);
 
+
+            // dd($update);
             $message = '';
             $vendor_name = $request->get('vendor_name');
             if (!empty($update)) {
-                DB::table('vendor_orders')->insert($insert_vendor_orders);
+                // dd($insert_vendor_orders);
+
+                // DB::table('vendor_orders')->insert($insert_vendor_orders);
+
+
+
                 $message = "Successfully sent to $vendor_name";
                 $get_order_detail = $objOrder->getVendorSingleOrderDetails($get_vendor->vendor_id, $data_update['patch_order_id']);
-
+                dd($get_order_detail);
                 $vendor_email = ($get_vendor->vendor_id == 4) ? 'mister_saqib@rocketmail.com' : 'evslearnings@gmail.com';
                 // dd($vendor_email);
                 Mail::to($vendor_email)->cc('mrdevsaqib@gmail.com')->send(new CreateVendorsOrderMail($get_order_detail));
@@ -272,19 +283,16 @@ class OrdersController extends ViewComposingController
             DB::commit();
 
         } catch (\Throwable $e) {
+            dd($e);
             DB::rollBack();
             $response['status'] = 400;
             $response['message'] = 'Something! Went wrong please contact administration';
         } catch (\Exception $e) {
+            dd($e);
             DB::rollBack();
             $response['status'] = 400;
             $response['message'] = 'Something! Went wrong please contact administration';
         }
-
-
-
-
-
 
         return redirect()->back()->with(['success' => "$message"]);
     }

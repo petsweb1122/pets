@@ -24,8 +24,8 @@ class LeeMarPet
         try {
             foreach ($lee_products as $key => $product) {
 
-                $check_dup_pro = DB::table('products as p')->join('product_variations as v', 'v.product_id', 'p.product_id')->where('v.variation_upc', $product->upc)->first();
-
+                $check_dup_pro = DB::table('products as p')->join('product_variations as v', 'v.product_id', 'p.product_id')->where('v.variation_upc', $product->upc)->where('p.vendor_id', 5)->first();
+                // dd($check_dup_pro);
                 // dd($product->brand_name);
                 if (!empty($product->brand_name)) {
                     $vendor_child_breadcrumb = strtolower(str_replace([' ', "/", "&", ",", ",-"], '-', $product->brand_name));
@@ -272,6 +272,7 @@ class LeeMarPet
 
 
         $lee_products = $theArray[0];
+        // dd($lee_products );
         // dd($lee_products[0]);
         unset($lee_products[0]);
         // dd($lee_products);
@@ -280,14 +281,16 @@ class LeeMarPet
         DB::beginTransaction();
 
         try {
-            $data = [];
+
             $itr = 0;
             foreach ($lee_products as $key => $product) {
+                $data = [];
+                // dd($product);
                 $check_dup_pro = '';
                 if (!empty($product[5])) {
                     $check_dup_pro =  DB::table('vendor_leemarpets as l')->where('l.upc', $product[5])->first();
                 }
-
+                // dd($check_dup_pro);
                 if (empty($product[5])) {
                     $check_dup_pro = DB::table('vendor_leemarpets as l')->where('l.manufacturer_no', $product[4])->where('l.sku', $product[0])->first();
                 }
@@ -321,19 +324,23 @@ class LeeMarPet
                     $data[$itr]['status'] = 'not_sync';
                     $itr++;
                 }
+
+                if (!empty($data)) {
+                    LeeMarPetModel::insert($data);
+                }
             }
 
-            if (!empty($data)) {
-                LeeMarPetModel::insert($data);
-            }
+
             DB::commit();
             $response['status'] = 200;
             $response['message'] = 'Product Added Successfully';
         } catch (\Throwable $e) {
+            dd($e);
             DB::rollBack();
             $response['status'] = 400;
             $response['message'] = 'Product Not Added Successfully Pease Try Again';
         } catch (\Exception $e) {
+            dd($e);
             DB::rollBack();
             $response['status'] = 400;
             $response['message'] = 'Product Not Added Successfully Pease Try Again';

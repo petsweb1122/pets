@@ -1,4 +1,4 @@
-window.intlTelInputGlobals.loadUtils("../js/utils.js");
+// window.intlTelInputGlobals.loadUtils("uyuytujyuytrftghjnm,mnhbghnjmknbvcxutils.js");
 
 var mobile = document.querySelector("#shipping_phone"),
     errorMsg = document.querySelector("#error-msg"),

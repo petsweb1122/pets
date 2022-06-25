@@ -102,7 +102,6 @@ class UploadProductsController extends ViewComposingController
     public function uploadLeeMarPetBySheet(Request $request)
     {
         $getVendorId = DB::table('vendors as v')->where('v.breadcrumb', 'leemarpet')->first();
-
         $vendor_id = $getVendorId->vendor_id;
         if (empty($getVendorId->vendor_id)) {
             $insert_vendor = [];
@@ -112,15 +111,14 @@ class UploadProductsController extends ViewComposingController
             $vendor_id = DB::getPdo()->lastInsertId();
         }
         $params = array();
-
-        $params['upload_sheet'] = $request->get('upload_sheet');
+        // dd($request->all());
+        $params['upload_sheet'] = $request->file('upload_sheet');
 
         $rules = [
             'upload_sheet' => 'required'
         ];
 
         $messages = [];
-
         $validation = Validator::make($params, $rules, $messages);
 
         if (!empty($validation->messages()->all())) {
@@ -130,7 +128,6 @@ class UploadProductsController extends ViewComposingController
 
         $obj_lee = new LeeMarPet();
         $file = $request->file('upload_sheet');
-        // dd($file);
         $obj_lee->UploadSheet($file, $vendor_id);
         return redirect()->back();
     }
@@ -441,6 +438,7 @@ class UploadProductsController extends ViewComposingController
         }
 
         $items = EndlessModel::where('status', 'not-synced')->take(20);
+        // dd($items);
 
         $objImport = new EndlessImporter();
 

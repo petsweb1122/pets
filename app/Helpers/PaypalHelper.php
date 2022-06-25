@@ -104,15 +104,15 @@ class PaypalHelper
 
         foreach ($session_order_data->order_items as $key => $item) {
             $single_pro = DB::table('products as p')->where('p.product_id', $item->product_id)->first();
-
+            $pv_obj = DB::table('product_variations as pv')->where('pv.product_id', $item->product_id)->where('pv.variation_id', $item->variation_id)->first();
             $image = DB::table('images as i')
                 ->join('images_sizes as is', 'i.id', 'is.image_id')
                 ->where('is.object_type', 'product')
                 ->where('is.object_id', $item->product_id)
                 ->where('is.size_number', 'm')
                 ->first();
-            $item->upc = $single_pro->p_upc;
-            $item->image = !empty($image->image_name)  ? url("/products/$item->product_id" . '_' . "$single_pro->p_upc/$image->image_name") : url('/img/no_image.png');
+            $item->upc = $pv_obj->variation_upc;
+            $item->image = !empty($image->image_name)  ? url("/products/$image->folder_name/$image->image_name") : url('/img/no_image.png');
         }
 
         $details = [

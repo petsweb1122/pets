@@ -190,7 +190,7 @@ class UserModel extends Model
 
     public function addFrontUserAndCustomerAndOrders($data)
     {
-
+        // dd($data);
         $user_data = json_decode(session()->get('user_data'));
 
         $response = [];
@@ -205,8 +205,12 @@ class UserModel extends Model
             $cart_contents = Cart::getContent();
             $total_v_price = 0;
             foreach ($cart_contents  as $key => $item) {
-                $p_obj = DB::table('products as p')->where('p.product_id', $item['id'])->first();
-                $total_q_price = $p_obj->v_price * $item['quantity'];
+                $explode = explode('_', $item['id']);
+                $pro_id = $explode[0];
+                $variation_id = $explode[1];
+                $p_obj = DB::table('products as p')->where('p.product_id', $pro_id)->first();
+                $pv_obj = DB::table('product_variations as pv')->where('pv.product_id', $pro_id)->where('pv.variation_id', $variation_id)->first();
+                $total_q_price = $pv_obj->v_price * $item['quantity'];
                 $total_v_price = $total_v_price +  $total_q_price;
             }
 
@@ -224,7 +228,6 @@ class UserModel extends Model
             // total_price + shipping_price + tax
             $order_data['final_amount'] = $order_data['total_price'] + $data['shipping_rate'] + $order_data['tax'];
 
-
             $add_order = DB::table('orders')->insert($order_data);
 
             $order_id = DB::getPdo()->lastInsertId();
@@ -235,15 +238,20 @@ class UserModel extends Model
 
             $itr  = 0;
             foreach ($carts as $key => $cart) {
-                $p_id = $cart['id'];
+                $explode = explode('_', $cart['id']);
+                $p_id = $explode[0];
+                $variation_id = $explode[1];
+
                 $p_obj = DB::table('products as p')->where('p.product_id', $p_id)->first();
+                $pv_obj = DB::table('product_variations as pv')->where('pv.product_id', $p_id)->where('pv.variation_id', $variation_id)->first();
                 $order_items[$itr]['order_id'] = (int) $order_id;
                 $order_items[$itr]['product_id'] = (int) $p_id;
+                $order_items[$itr]['variation_id'] = (int) $variation_id;
                 $order_items[$itr]['product_title'] = $p_obj->title;
                 $order_items[$itr]['p_qty'] = $cart->quantity;
                 $order_items[$itr]['price'] = $cart->price;
                 $order_items[$itr]['v_id'] = $p_obj->vendor_id;
-                $order_items[$itr]['v_price'] = $p_obj->v_price;
+                $order_items[$itr]['v_price'] = $pv_obj->v_price;
                 $itr++;
             }
             DB::table('order_items')->insert($order_items);
