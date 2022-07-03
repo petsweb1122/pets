@@ -30,7 +30,7 @@
             <div id="parent_category">
                 <div class="form-group parent-category col-md-6">
                     {!! Form::label('parent_category', 'Select Category For Map:') !!}
-                    {!! Form::select('parent_category', !empty($categories) ? $categories : [], null, ['class' => 'form-control single-category']) !!}
+                    {!! Form::select('parent_category[]', !empty($categories) ? $categories : [], null, ['class' => 'form-control single-category' , 'multiple' => 'multiple']) !!}
                 </div>
             </div>
         </div>

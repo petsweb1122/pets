@@ -35,8 +35,13 @@ class CategoryModel extends Model
 
         $category_results = DB::table('vendor_categories as vc')->select('vc.*')
             ->where('vc.vendor_id', $vendor_id)
-            ->where('vc.map_with', $exp, null)
+            // ->where('vc.map_with', $exp, null)
+            ->when($type == 'mapped', function ($q) {
+                $q->join('vendor_categories_to_categories as vcc', 'vcc.vendor_cat_id', 'vc.id');
+            })
+
             ->orderBy('category_name', 'asc')
+            // ->groupBy('vc.id')
             ->get();
 
         $categories = array('');
@@ -48,12 +53,13 @@ class CategoryModel extends Model
         return $categories;
     }
 
-    public function getCurrentCategory($cat_id , $vendor_id){
+    public function getCurrentCategory($cat_id, $vendor_id)
+    {
 
         $category = DB::table('vendor_categories as vc')
-        ->leftJoin('categories as c' , 'c.category_id', 'vc.map_with')
-        ->select('vc.*', 'c.title as map_name' , 'c.breadcrumb as map_bread')
-        ->where('vc.vendor_id', $vendor_id)->where('vc.id', $cat_id)->first();
+            ->leftJoin('categories as c', 'c.category_id', 'vc.map_with')
+            ->select('vc.*', 'c.title as map_name', 'c.breadcrumb as map_bread')
+            ->where('vc.vendor_id', $vendor_id)->where('vc.id', $cat_id)->first();
 
         return $category;
     }
@@ -80,6 +86,7 @@ class CategoryModel extends Model
     public function getAllValidationCategoriesFullColums($params = [], $type, $vendor_id)
     {
 
+        // dd($type);
         $exp = ($type == 'unmapped') ? "=" : "!=";
 
         $category_results = DB::table("vendor_categories as vc");
@@ -88,14 +95,19 @@ class CategoryModel extends Model
         $skip_val = !empty($params['page']) ? $params['page'] * $take : 0;
 
         $categories = $category_results
+            ->when($type == 'mapped', function ($q) {
+                $q->join('vendor_categories_to_categories as vcc', 'vcc.vendor_cat_id', 'vc.id')->leftJoin('categories as c', 'c.category_id', 'vcc.category_id')->select('vc.*' , 'c.title as map_with');
+            })
+            ->when($type == 'unmapped', function ($q) {
+                $q->leftJoin('vendor_categories_to_categories as vcc', 'vcc.vendor_cat_id', 'vc.id')->leftJoin('categories as c', 'c.category_id', 'vcc.category_id')->select('vc.*' , 'c.title as map_with')->where('c.title'  , null);
+            })
             ->where('vc.vendor_id', $vendor_id)
-            ->where('vc.map_with', $exp, null)
             ->skip($skip_val)
             ->take($take)
             ->get()
             ->toArray();
 
-        return $categories;
+            return $categories;
     }
 
     public function getCategoryDropdowns()

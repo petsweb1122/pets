@@ -22,12 +22,14 @@
 
                 <div class="info-box">
                     <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
-                    @foreach ($vendor_product_count as $key => $object)
-                        <div class="info-box-content pull-left">
-                            <span class="info-box-text">{{ $object->title }}</span>
-                            <span class="info-box-number">{{ $object->total }}</span>
-                        </div>
-                    @endforeach
+                    @if (!empty($vendor_product_count))
+                        @foreach ($vendor_product_count as $key => $object)
+                            <div class="info-box-content pull-left">
+                                <span class="info-box-text">{{ $object->title }}</span>
+                                <span class="info-box-number">{{ $object->total }}</span>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
@@ -48,7 +50,7 @@
 
                     <div class="info-box-content pull-left">
                         <span class="info-box-text">Total Brands</span>
-                        <span class="info-box-number">{{$total_brands + $child_vendors }}</span>
+                        <span class="info-box-number">{{ $total_brands + $child_vendors }}</span>
                     </div>
                 </div>
             </div>
@@ -59,33 +61,35 @@
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3>{{$total_categories}}</h3>
+                    <h3>{{ $total_categories }}</h3>
                     <p>Total Categories</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="{{url('/admin/category/all-categories')}}" class="small-box-footer" title="More Info">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{ url('/admin/category/all-categories') }}" class="small-box-footer" title="More Info">More
+                    info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3>{{$total_brands + $child_vendors }}</h3>
+                    <h3>{{ $total_brands + $child_vendors }}</h3>
                     <p>Total Brands</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="{{url('/admin/brand/all-brands')}}" class="small-box-footer" title="More Info">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{ url('/admin/brand/all-brands') }}" class="small-box-footer" title="More Info">More info <i
+                        class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>{{$product_with_images}}</h3>
+                    <h3>{{ $product_with_images }}</h3>
                     <p>Product With Images</p>
                 </div>
                 <div class="icon">
@@ -97,7 +101,7 @@
             <!-- small box -->
             <div class="small-box bg-red">
                 <div class="inner">
-                    <h3>{{$product_without_images}}</h3>
+                    <h3>{{ $product_without_images }}</h3>
                     <p>Product Without Images</p>
                 </div>
                 <div class="icon">

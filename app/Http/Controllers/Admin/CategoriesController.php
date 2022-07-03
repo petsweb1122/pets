@@ -265,9 +265,8 @@ class CategoriesController extends ViewComposingController
         $params = array();
         $errors = array();
 
-        // dd($request->all());
         $rules = [
-            'parent_category' => 'required',
+            'parent_category' => 'required|array',
         ];
         $messages = [
             'parent_category.required' => 'Select Map Category'
@@ -286,11 +285,18 @@ class CategoriesController extends ViewComposingController
             return redirect()->back()->with($data)->withInput($request->all());
         }
 
+        $params = [];
+        foreach ($request->parent_category as $key => $cid) {
+            $params[$key]['vendor_cat_id']  = $cat_id;
+            $params[$key]['category_id']  = $cid;
+        }
 
-        $update_cate = DB::table('vendor_categories')->where('id', $cat_id)->where('vendor_id', $vendor_id)->update(['map_with' => $request->parent_category]);
+        // $update_cate = DB::table('vendor_categories')->where('id', $cat_id)->where('vendor_id', $vendor_id)->update(['map_with' => $request->parent_category]);
+        $insert_cate = DB::table('vendor_categories_to_categories')->insert($params);
 
-        $data['message'] = !empty($update_cate) ? 'Sucessfully Mapped' : 'Something Went Wrong';
-        $data['status'] = !empty($update_cate) ? 200 : 204;
+
+        $data['message'] = !empty($insert_cate) ? 'Sucessfully Mapped' : 'Something Went Wrong';
+        $data['status'] = !empty($insert_cate) ? 200 : 204;
 
         return redirect()->back()->with($data);
     }
