@@ -117,6 +117,7 @@ Route::group(['middleware' => ['checkuser']], function () {
         Route::post('/admin/category-validation/all-vendor-category-{vendor_id}/{cat_id}', 'Admin\CategoriesController@postVendorMapCategory');
         Route::get('/admin/category-validation/add-vendor-category-{vendor_id}/{cat_id}', 'Admin\CategoriesController@addVendorMapCategory');
         Route::get('/admin/category-validation/sync-vendor-category-{vendor_id}/{cat_id}', 'Admin\CategoriesController@syncVendorMapCategory');
+        Route::post('/admin/category-validation/sync-vendor-{vendor_id}/pets-categories', 'Admin\CategoriesController@syncVendorCategoriesToCategories');
 
 
 

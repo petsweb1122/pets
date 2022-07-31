@@ -277,8 +277,8 @@ class LeeMarPet
         unset($lee_products[0]);
         // dd($lee_products);
 
-
-        DB::beginTransaction();
+        // dd($lee_products);
+        // DB::beginTransaction();
 
         try {
 
@@ -331,17 +331,17 @@ class LeeMarPet
             }
 
 
-            DB::commit();
+            // DB::commit();
             $response['status'] = 200;
             $response['message'] = 'Product Added Successfully';
         } catch (\Throwable $e) {
             dd($e);
-            DB::rollBack();
+            // DB::rollBack();
             $response['status'] = 400;
             $response['message'] = 'Product Not Added Successfully Pease Try Again';
         } catch (\Exception $e) {
             dd($e);
-            DB::rollBack();
+            // DB::rollBack();
             $response['status'] = 400;
             $response['message'] = 'Product Not Added Successfully Pease Try Again';
         }

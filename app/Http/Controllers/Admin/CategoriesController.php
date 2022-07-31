@@ -10,6 +10,7 @@ use Validator;
 use Cache;
 use Faker\Provider\Image;
 use DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CategoriesController extends ViewComposingController
 {
@@ -246,6 +247,7 @@ class CategoriesController extends ViewComposingController
 
     public function getAllVendorCategoriesValidationPage(Request $request, $vendor_id)
     {
+
         return $this->buildTemplate('category_validation');
     }
 
@@ -374,5 +376,178 @@ class CategoriesController extends ViewComposingController
 
 
         return redirect()->back()->with($data);
+    }
+
+
+    public function syncVendorCategoriesToCategories(Request $request , $vendor_id){
+
+        $theArrays = Excel::toArray([], $request->file('upload_categories'));
+        unset($theArrays[0][0]);
+        foreach ($theArrays[0] as $key => $row) {
+            //First Level Category
+            if(!empty($row[6])){
+                $params = [];
+
+                $bread = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[6]));
+                $bread = str_replace('--', '-', $bread);
+
+                $check_cat = DB::table('categories as c')->where('c.breadcrumb' , $bread)->count();
+                if(empty($check_cat)){
+                    $params['title'] = $row[6];
+                    $params['breadcrumb'] = $bread;
+                    $params['cat_level'] = 1;
+
+
+                    CategoryModel::insert($params);
+                }
+            }
+
+            //Second Level Category
+            if(!empty($row[7])){
+
+                $params = [];
+                $bread1 = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[6]));
+                $bread1 = str_replace('--', '-', $bread1);
+                $bread1 = str_replace('--', '-', $bread1);
+
+                $cur_bread = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[7]));
+                $cur_bread = str_replace('--', '-', $cur_bread);
+                $cur_bread = str_replace('--', '-', $cur_bread);
+
+                $full_bread = $bread1 . '-' . $cur_bread;
+
+                $parent_obj = DB::table('categories as c')->where('c.breadcrumb' , $bread1)->first();
+
+                $check_cat = DB::table('categories as c')->where('c.breadcrumb' , $full_bread)->count();
+
+                if(empty($check_cat)){
+                    $params['title'] = $row[7];
+                    $params['breadcrumb'] = $full_bread;
+                    $params['parent_id'] = $parent_obj->category_id;
+                    $params['parent_title'] = $parent_obj->title;
+                    $params['parent_breadcrumb'] = $parent_obj->breadcrumb;
+                    $params["cat_1"] =  $parent_obj->category_id;
+                    $params['cat_level'] = 2;
+
+                    CategoryModel::insert($params);
+                }
+            }
+
+            //Third Level Category
+            if(!empty($row[8])){
+
+                $params = [];
+                $bread1 = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[6]));
+                $bread1 = str_replace('--', '-', $bread1);
+                $bread1 = str_replace('--', '-', $bread1);
+
+                $bread2 = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[7]));
+                $bread2 = str_replace('--', '-', $bread2);
+                $bread2 = str_replace('--', '-', $bread2);
+
+                $cur_bread = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[8]));
+                $cur_bread = str_replace('--', '-', $cur_bread);
+                $cur_bread = str_replace('--', '-', $cur_bread);
+
+                $full_bread = $bread1 . '-' . $bread2 . '-' . $cur_bread;
+
+                $parent_obj = DB::table('categories as c')->where('c.breadcrumb' , $bread1 . '-' . $bread2)->first();
+                $check_cat = DB::table('categories as c')->where('c.breadcrumb' , $full_bread)->count();
+                if(empty($check_cat)){
+                    $params['title'] = $row[8];
+                    $params['breadcrumb'] = $full_bread;
+                    $params['parent_id'] = $parent_obj->category_id;
+                    $params['parent_title'] = $parent_obj->title;
+                    $params['parent_breadcrumb'] = $parent_obj->breadcrumb;
+                    $params["cat_1"] =  $parent_obj->cat_1;
+                    $params["cat_2"] =  $parent_obj->category_id;
+                    $params['cat_level'] = 3;
+
+                    CategoryModel::insert($params);
+                }
+            }
+
+            //Third Level Category
+            if(!empty($row[9])){
+
+                $params = [];
+                $bread1 = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[6]));
+                $bread1 = str_replace('--', '-', $bread1);
+                $bread1 = str_replace('--', '-', $bread1);
+
+                $bread2 = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[7]));
+                $bread2 = str_replace('--', '-', $bread2);
+                $bread2 = str_replace('--', '-', $bread2);
+
+                $bread3 = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[8]));
+                $bread3 = str_replace('--', '-', $bread3);
+                $bread3 = str_replace('--', '-', $bread3);
+
+                $cur_bread = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[9]));
+                $cur_bread = str_replace('--', '-', $cur_bread);
+                $cur_bread = str_replace('--', '-', $cur_bread);
+
+                $full_bread = $bread1 . '-' . $bread2 . '-' . $bread3 . '-'  . $cur_bread;
+
+                $parent_obj = DB::table('categories as c')->where('c.breadcrumb' , $bread1 . '-' . $bread2 . '-' . $bread3)->first();
+                $check_cat = DB::table('categories as c')->where('c.breadcrumb' , $full_bread)->count();
+                if(empty($check_cat)){
+                    $params['title'] = $row[9];
+                    $params['breadcrumb'] = $full_bread;
+                    $params['parent_id'] = $parent_obj->category_id;
+                    $params['parent_title'] = $parent_obj->title;
+                    $params['parent_breadcrumb'] = $parent_obj->breadcrumb;
+                    $params["cat_1"] =  $parent_obj->cat_1;
+                    $params["cat_2"] =  $parent_obj->cat_2;
+                    $params["cat_3"] =  $parent_obj->category_id;
+                    $params['cat_level'] = 4;
+                    CategoryModel::insert($params);
+                }
+            }
+
+
+            $bread1 = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[6]));
+            $bread1 = str_replace('--', '-', $bread1);
+            $bread1 = str_replace('--', '-', $bread1);
+
+            $bread2 = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[7]));
+            $bread2 = str_replace('--', '-', $bread2);
+            $bread2 = str_replace('--', '-', $bread2);
+
+            $bread3 = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[8]));
+            $bread3 = str_replace('--', '-', $bread3);
+            $bread3 = str_replace('--', '-', $bread3);
+
+            $cur_bread = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $row[9]));
+            $cur_bread = str_replace('--', '-', $cur_bread);
+            $cur_bread = str_replace('--', '-', $cur_bread);
+
+            $full_bread = $bread1 . (!empty($bread2) ? '-' . $bread2 : '') . (!empty($bread3) ?  '-' .  $bread3 : '' ) . (!empty($cur_bread) ?  '-'  .  $cur_bread : '');
+
+            // dd($row);
+        $vendor_category = DB::table('vendor_categories as vc')->where('vc.category_breadcrumb' , $row[5])->where('vc.vendor_id', $vendor_id );
+        $vendor_category_obj = $vendor_category->first();
+
+            if(!empty($vendor_category->count())){
+
+                $pet_cat = DB::table('categories as c')->where('c.breadcrumb' , $full_bread)->first();
+
+                // dd($pet_cat->category_id, $vendor_category_obj->id);
+
+                $map_category = DB::table('vendor_categories_to_categories as mc')->where('mc.vendor_cat_id', $vendor_category_obj->id)->where('mc.category_id', $pet_cat->category_id);
+
+                if(empty($map_category->count())){
+                    $map_data = [];
+                    $map_data['vendor_cat_id'] = $vendor_category_obj->id;
+                    $map_data['category_id'] = $pet_cat->category_id;
+
+                    DB::table('vendor_categories_to_categories')->insert($map_data);
+
+                }
+
+            }
+
+        }
+
     }
 }
