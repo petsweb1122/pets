@@ -37,8 +37,12 @@ class UploadProductsController extends ViewComposingController
             $vendor_id = DB::getPdo()->lastInsertId();
         }
 
-        $count = DB::table('vendor_categories as vc')->where('vc.vendor_id', $vendor_id)->where('vc.map_with', null)->count();
-        $this->viewData['categories_mapped'] = ($count > 0) ? null : true;
+        $count = DB::table('vendor_categories as vc')->where('vc.vendor_id', $vendor_id)->count();
+
+        $join_count = DB::table('vendor_categories as vc')->join('vendor_categories_to_categories as vcc' , 'vc.id' , 'vcc.vendor_cat_id')->where('vc.vendor_id', $vendor_id)->groupBy('vc.id')->get();
+
+        $this->viewData['categories_mapped'] = (count($join_count)  !=  $count) ? null : true;
+
         return $this->buildTemplate('phillips_api');
     }
 
@@ -55,9 +59,11 @@ class UploadProductsController extends ViewComposingController
             $vendor_id = DB::getPdo()->lastInsertId();
         }
 
-        $count = DB::table('vendor_categories as vc')->where('vc.vendor_id', $vendor_id)->where('vc.map_with', null)->count();
+        $count = DB::table('vendor_categories as vc')->where('vc.vendor_id', $vendor_id)->count();
 
-        $this->viewData['categories_mapped'] = ($count > 0) ? null : true;
+        $join_count = DB::table('vendor_categories as vc')->join('vendor_categories_to_categories as vcc' , 'vc.id' , 'vcc.vendor_cat_id')->where('vc.vendor_id', $vendor_id)->groupBy('vc.id')->get();
+
+        $this->viewData['categories_mapped'] = (count($join_count)  !=  $count) ? null : true;
         return $this->buildTemplate('endless_api');
     }
 
@@ -75,8 +81,13 @@ class UploadProductsController extends ViewComposingController
             $vendor_id = DB::getPdo()->lastInsertId();
         }
 
-        $count = DB::table('vendor_categories as vc')->where('vc.vendor_id', $vendor_id)->where('vc.map_with', null)->count();
-        $this->viewData['categories_mapped'] = ($count > 0) ? null : true;
+
+        $count = DB::table('vendor_categories as vc')->where('vc.vendor_id', $vendor_id)->count();
+
+        $join_count = DB::table('vendor_categories as vc')->join('vendor_categories_to_categories as vcc' , 'vc.id' , 'vcc.vendor_cat_id')->where('vc.vendor_id', $vendor_id)->groupBy('vc.id')->get();
+
+        $this->viewData['categories_mapped'] = (count($join_count)  !=  $count) ? null : true;
+
         return $this->buildTemplate('leemarpet_sheet');
     }
 
@@ -410,7 +421,6 @@ class UploadProductsController extends ViewComposingController
 
 
             try {
-                // dd($data);
                 EndlessModel::insert($data);
             } catch (Exception $ex) {
                 dd($ex);

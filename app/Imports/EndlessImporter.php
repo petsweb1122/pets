@@ -20,7 +20,7 @@ class EndlessImporter
         // VALIDATE API STRUCTURE
 
         $insert_products = [];
-        DB::beginTransaction();
+        // DB::beginTransaction();
         $sync_upcs = array();
 
         try {
@@ -109,81 +109,61 @@ class EndlessImporter
 
 
                     $params_category = [];
-                    // $category = strtolower(str_replace(array("\r\n", "\r", " ", "'", ",", "/", "#"), '-', $metadata->species));
-                    // $category = str_replace("&-", '-', $category);
-                    // $category = str_replace("--", '-', $category);
-                    // $category = str_replace("--", '-', $category);
-                    // $category = rtrim($category, '-');
-                    // $res_cat = DB::table('categories as c')->where('c.breadcrumb', $category)->where('c.cat_level', 1)->first();
 
-                    // if (empty($res_cat->category_id)) {
-                    //     $res_cat = $this->addFirstLevelCategory($metadata->species, $category);
-                    // }
+                    $res_cats = DB::table('vendor_categories as vc')
+                        ->select('vcc.*', 'c.title as category_title')
+                        ->join('vendor_categories_to_categories as vcc' , 'vc.id' , 'vcc.vendor_cat_id')
+                        ->join('categories as c' , 'c.category_id' , 'vcc.category_id')
+                        ->where('vc.vendor_id', $vendor_id)
+                        ->where('vc.category_name', $metadata->species)->groupBy('vcc.category_id')->get();
 
-                    $res_cat = DB::table('vendor_categories as vc')
-                        ->select('c.*')
-                        ->join('categories as c', 'c.category_id', 'vc.map_with')->where('vc.category_name', $metadata->species)->where('vc.vendor_id', $vendor_id)->first();
+                    $itr = 0;
+                    foreach($res_cats as $cat_obj){
 
-                    $first_level_cat = $res_cat->category_id;
+                        $params_category[$itr]['category_id'] = $cat_obj->category_id;
+                        $params_category[$itr]['category_value'] = $cat_obj->category_title;
+                        $params_category[$itr]['product_id'] = $product_id;
+                        $itr++;
+                    }
 
-                    $params_category[0]['category_id'] = $first_level_cat;
-                    $params_category[0]['category_value'] = $res_cat->title;
-                    $params_category[0]['product_id'] = $product_id;
 
                     if (!empty($metadata->category)) {
 
-                        // $category2 = strtolower(str_replace(array("\r\n", "\r", " ", "'", ",", "/", "#"), '-', $metadata->category));
-                        // $category2 = str_replace("&-", '-', $category2);
-                        // $category2 = str_replace("--", '-', $category2);
-                        // $category2 = str_replace("--", '-', $category2);
-                        // $category2 = rtrim($category2, '-');
-
-                        // $cat2_bread = $category . '-' . $category2;
-                        // $res_cat2 = DB::table('categories as c')->where('c.breadcrumb', $cat2_bread)->where('c.cat_level', 2)->first();
-
-                        // if (empty($res_cat2->category_id)) {
-                        //     $res_cat2 = $this->addSecondLevelCategory($metadata->category, $res_cat, $cat2_bread);
-                        // }
-
                         $res_cat2 = DB::table('vendor_categories as vc')
-                            ->select('c.*')
-                            ->join('categories as c', 'c.category_id', 'vc.map_with')->where('vc.category_name', $metadata->category)->where('vc.vendor_id', $vendor_id)->first();
+                        ->select('vcc.*', 'c.title as category_title', 'c.breadcrumb')
+                        ->join('vendor_categories_to_categories as vcc' , 'vc.id' , 'vcc.vendor_cat_id')
+                        ->join('categories as c' , 'c.category_id' , 'vcc.category_id')
+                        ->where('vc.vendor_id', $vendor_id)
+                        ->where('vc.category_name', $metadata->category)->groupBy('vcc.category_id')->get();
 
-                        $second_level_cat = $res_cat2->category_id;
+                        foreach($res_cat2 as $cat_obj){
 
-                        $params_category[1]['category_id'] = $second_level_cat;
-                        $params_category[1]['category_value'] = $res_cat2->title;
-                        $params_category[1]['product_id'] = $product_id;
+                            $params_category[$itr]['category_id'] = $cat_obj->category_id;
+                            $params_category[$itr]['category_value'] = $cat_obj->category_title;
+                            $params_category[$itr]['product_id'] = $product_id;
+                            $itr++;
+                        }
                     }
-
 
 
                     if (!empty($metadata->subcategory)) {
 
-                        // $category3 = strtolower(str_replace(array("\r\n", "\r", " ", "'", ",", "/", "#"), '-', $metadata->subcategory));
-                        // $category3 = str_replace("&-", '-', $category3);
-                        // $category3 = str_replace("--", '-', $category3);
-                        // $category3 = str_replace("--", '-', $category3);
-                        // $category3 = rtrim($category3, '-');
-
-                        // $cat3_bread = $category . '-' . $category2 . '-' . $category3;
-                        // $res_cat3 = DB::table('categories as c')->where('c.breadcrumb', $cat3_bread)->where('c.cat_level', 3)->first();
-
-                        // if (empty($res_cat3->category_id)) {
-                        //     $res_cat3 = $this->addThirdLevelCategory($metadata->subcategory, $res_cat, $res_cat2, $cat3_bread);
-                        // }
-
                         $res_cat3 = DB::table('vendor_categories as vc')
-                            ->select('c.*')
-                            ->join('categories as c', 'c.category_id', 'vc.map_with')->where('vc.category_name', $metadata->subcategory)->where('vc.vendor_id', $vendor_id)->first();
+                        ->select('vcc.*', 'c.title as category_title')
+                        ->join('vendor_categories_to_categories as vcc' , 'vc.id' , 'vcc.vendor_cat_id')
+                        ->join('categories as c' , 'c.category_id' , 'vcc.category_id')
+                        ->where('vc.vendor_id', $vendor_id)
+                        ->where('vc.category_name', $metadata->subcategory)->groupBy('vcc.category_id')->get();
 
-                        $third_level_cat = $res_cat3->category_id;
+                        foreach($res_cat3 as $cat_obj){
 
-                        $params_category[2]['category_id'] = $third_level_cat;
-                        $params_category[2]['category_value'] = $res_cat3->title;
-                        $params_category[2]['product_id'] = $product_id;
+                            $params_category[$itr]['category_id'] = $cat_obj->category_id;
+                            $params_category[$itr]['category_value'] = $cat_obj->category_title;
+                            $params_category[$itr]['product_id'] = $product_id;
+                            $itr++;
+                        }
+
                     }
-
 
                     DB::table('product_categories')->insert($params_category);
 
@@ -219,17 +199,17 @@ class EndlessImporter
 
 
 
-            DB::commit();
+            // DB::commit();
             $response['status'] = 200;
             $response['message'] = 'Product Added Successfully';
         } catch (\Throwable $e) {
             // dd($e);
-            DB::rollBack();
+            // DB::rollBack();
             $response['status'] = 400;
             $response['message'] = 'Product Not Added Successfully Pease Try Again';
         } catch (\Exception $e) {
             // dd($e);
-            DB::rollBack();
+            // DB::rollBack();
             $response['status'] = 400;
             $response['message'] = 'Product Not Added Successfully Pease Try Again';
         }

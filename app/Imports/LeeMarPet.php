@@ -110,46 +110,47 @@ class LeeMarPet
 
                     $params_category = [];
 
-                    // $category = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $product->pet_type));
-                    // $category = str_replace('--', '-', $category);
-                    // $res_cat = DB::table('categories as c')->where('c.breadcrumb', $category)->where('c.cat_level', 1)->first();
 
-                    // if (empty($res_cat->category_id)) {
-                    //     $res_cat = $this->addFirstLevelCategory($product->pet_type);
-                    // }
+                    // $res_cat = DB::table('vendor_categories as vc')
+                    //     ->select('c.*')
+                    //     ->join('categories as c', 'c.category_id', 'vc.map_with')->where('vc.category_name', $product->pet_type)->where('vc.vendor_id', $vendor_id)->first();
 
+                    $res_cats = DB::table('vendor_categories as vc')
+                        ->select('vcc.*', 'c.title as category_title')
+                        ->join('vendor_categories_to_categories as vcc' , 'vc.id' , 'vcc.vendor_cat_id')
+                        ->join('categories as c' , 'c.category_id' , 'vcc.category_id')
+                        ->where('vc.vendor_id', $vendor_id)
+                        ->where('vc.category_name', $product->pet_type)->groupBy('vcc.category_id')->get();
 
-                    $res_cat = DB::table('vendor_categories as vc')
-                        ->select('c.*')
-                        ->join('categories as c', 'c.category_id', 'vc.map_with')->where('vc.category_name', $product->pet_type)->where('vc.vendor_id', $vendor_id)->first();
+                    $itr = 0;
+                    foreach($res_cats as $cat_obj){
 
-                    $first_level_cat = $res_cat->category_id;
-
-                    $params_category[0]['category_id'] = $first_level_cat;
-                    $params_category[0]['category_value'] = $res_cat->title;
-                    $params_category[0]['product_id'] = $product_id;
+                        $params_category[$itr]['category_id'] = $cat_obj->category_id;
+                        $params_category[$itr]['category_value'] = $cat_obj->category_title;
+                        $params_category[$itr]['product_id'] = $product_id;
+                        $itr++;
+                    }
 
                     if (!empty($product->category_name)) {
 
-                        // $category2 = strtolower(str_replace(array('--', ' ', '/', ',',  '.', '"', '\'', '&'), '-', $product->category_name));
-                        // $category2 = str_replace('--', '-', $category2);
-                        // $res_cat2 = DB::table('categories as c')->where('c.breadcrumb', $category . '-' . $category2)->where('c.cat_level', 2)->first();
-                        // if (empty($res_cat2->category_id)) {
-                        //     $res_cat2 = $this->addSecondLevelCategory($product->category_name, $res_cat);
-                        // }
-
-
                         $res_cat2 = DB::table('vendor_categories as vc')
-                            ->select('c.*')
-                            ->join('categories as c', 'c.category_id', 'vc.map_with')->where('vc.category_name', $product->category_name)->where('vc.vendor_id', $vendor_id)->first();
+                        ->select('vcc.*', 'c.title as category_title', 'c.breadcrumb')
+                        ->join('vendor_categories_to_categories as vcc' , 'vc.id' , 'vcc.vendor_cat_id')
+                        ->join('categories as c' , 'c.category_id' , 'vcc.category_id')
+                        ->where('vc.vendor_id', $vendor_id)
+                        ->where('vc.category_name', $product->category_name)->groupBy('vcc.category_id')->get();
 
-                        $second_level_cat = $res_cat2->category_id;
 
-                        $params_category[1]['category_id'] = $second_level_cat;
-                        $params_category[1]['category_value'] = $res_cat2->title;
-                        $params_category[1]['product_id'] = $product_id;
+                        foreach($res_cat2 as $cat_obj){
+
+                            $params_category[$itr]['category_id'] = $cat_obj->category_id;
+                            $params_category[$itr]['category_value'] = $cat_obj->category_title;
+                            $params_category[$itr]['product_id'] = $product_id;
+                            $itr++;
+                        }
                     }
 
+                    // dd($params_category);
                     DB::table('product_categories')->insert($params_category);
 
 
