@@ -116,7 +116,7 @@ class LeeMarPet
                     //     ->join('categories as c', 'c.category_id', 'vc.map_with')->where('vc.category_name', $product->pet_type)->where('vc.vendor_id', $vendor_id)->first();
 
                     $res_cats = DB::table('vendor_categories as vc')
-                        ->select('vcc.*', 'c.title as category_title')
+                        ->select('vcc.*', 'c.title as category_title', 'c.breadcrumb')
                         ->join('vendor_categories_to_categories as vcc' , 'vc.id' , 'vcc.vendor_cat_id')
                         ->join('categories as c' , 'c.category_id' , 'vcc.category_id')
                         ->where('vc.vendor_id', $vendor_id)
@@ -131,14 +131,29 @@ class LeeMarPet
                         $itr++;
                     }
 
+                    $category_breadcrumb = strtolower(str_replace(array("\r\n", "\r", " ", "'", ",", "/", "#"), '-',$product->pet_type));
+                    $category_breadcrumb = str_replace("&-", '-', $category_breadcrumb);
+                    $category_breadcrumb = str_replace("--", '-', $category_breadcrumb);
+                    $category_breadcrumb = str_replace("--", '-', $category_breadcrumb);
+                    $category_breadcrumb = rtrim($category_breadcrumb, '-');
+
+                    $cat_breadcrumb = strtolower($product->pet_type);
+
                     if (!empty($product->category_name)) {
+
+                        $category_breadcrumb = strtolower(str_replace(array("\r\n", "\r", " ", "'", ",", "/", "#"), '-',$product->category_name));
+                        $category_breadcrumb = str_replace("&-", '-', $category_breadcrumb);
+                        $category_breadcrumb = str_replace("--", '-', $category_breadcrumb);
+                        $category_breadcrumb = str_replace("--", '-', $category_breadcrumb);
+                        $cat_breadcrumb = $cat_breadcrumb . '-' . rtrim($category_breadcrumb, '-');
 
                         $res_cat2 = DB::table('vendor_categories as vc')
                         ->select('vcc.*', 'c.title as category_title', 'c.breadcrumb')
                         ->join('vendor_categories_to_categories as vcc' , 'vc.id' , 'vcc.vendor_cat_id')
                         ->join('categories as c' , 'c.category_id' , 'vcc.category_id')
                         ->where('vc.vendor_id', $vendor_id)
-                        ->where('vc.category_name', $product->category_name)->groupBy('vcc.category_id')->get();
+                        ->where('vc.category_name', $product->category_name)
+                        ->where('vc.category_breadcrumb' , $cat_breadcrumb)->groupBy('vcc.category_id')->get();
 
 
                         foreach($res_cat2 as $cat_obj){
@@ -150,7 +165,6 @@ class LeeMarPet
                         }
                     }
 
-                    // dd($params_category);
                     DB::table('product_categories')->insert($params_category);
 
 

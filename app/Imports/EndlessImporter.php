@@ -111,13 +111,13 @@ class EndlessImporter
                     $params_category = [];
 
                     $res_cats = DB::table('vendor_categories as vc')
-                        ->select('vcc.*', 'c.title as category_title')
+                        ->select('vcc.*', 'c.title as category_title', 'c.breadcrumb')
                         ->join('vendor_categories_to_categories as vcc' , 'vc.id' , 'vcc.vendor_cat_id')
                         ->join('categories as c' , 'c.category_id' , 'vcc.category_id')
                         ->where('vc.vendor_id', $vendor_id)
                         ->where('vc.category_name', $metadata->species)->groupBy('vcc.category_id')->get();
-
                     $itr = 0;
+
                     foreach($res_cats as $cat_obj){
 
                         $params_category[$itr]['category_id'] = $cat_obj->category_id;
@@ -126,15 +126,30 @@ class EndlessImporter
                         $itr++;
                     }
 
+                    $category_breadcrumb = strtolower(str_replace(array("\r\n", "\r", " ", "'", ",", "/", "#"), '-',$metadata->species));
+                    $category_breadcrumb = str_replace("&-", '-', $category_breadcrumb);
+                    $category_breadcrumb = str_replace("--", '-', $category_breadcrumb);
+                    $category_breadcrumb = str_replace("--", '-', $category_breadcrumb);
+                    $category_breadcrumb = rtrim($category_breadcrumb, '-');
+
+                    $cat_breadcrumb = strtolower($metadata->species);
 
                     if (!empty($metadata->category)) {
+
+                        $category_breadcrumb = strtolower(str_replace(array("\r\n", "\r", " ", "'", ",", "/", "#"), '-',$metadata->category));
+                        $category_breadcrumb = str_replace("&-", '-', $category_breadcrumb);
+                        $category_breadcrumb = str_replace("--", '-', $category_breadcrumb);
+                        $category_breadcrumb = str_replace("--", '-', $category_breadcrumb);
+                        $cat_breadcrumb = $cat_breadcrumb . '-' . rtrim($category_breadcrumb, '-');
 
                         $res_cat2 = DB::table('vendor_categories as vc')
                         ->select('vcc.*', 'c.title as category_title', 'c.breadcrumb')
                         ->join('vendor_categories_to_categories as vcc' , 'vc.id' , 'vcc.vendor_cat_id')
                         ->join('categories as c' , 'c.category_id' , 'vcc.category_id')
                         ->where('vc.vendor_id', $vendor_id)
-                        ->where('vc.category_name', $metadata->category)->groupBy('vcc.category_id')->get();
+                        ->where('vc.category_name', $metadata->category)
+                        ->where('vc.category_breadcrumb' , $cat_breadcrumb)
+                        ->groupBy('vcc.category_id')->get();
 
                         foreach($res_cat2 as $cat_obj){
 
@@ -142,18 +157,28 @@ class EndlessImporter
                             $params_category[$itr]['category_value'] = $cat_obj->category_title;
                             $params_category[$itr]['product_id'] = $product_id;
                             $itr++;
+
                         }
                     }
 
+                    // dd($vendor_id);
 
                     if (!empty($metadata->subcategory)) {
 
+                        $category_breadcrumb = strtolower(str_replace(array("\r\n", "\r", " ", "'", ",", "/", "#"), '-',$metadata->subcategory));
+                        $category_breadcrumb = str_replace("&-", '-', $category_breadcrumb);
+                        $category_breadcrumb = str_replace("--", '-', $category_breadcrumb);
+                        $category_breadcrumb = str_replace("--", '-', $category_breadcrumb);
+                        $cat_breadcrumb = $cat_breadcrumb . '-' . rtrim($category_breadcrumb, '-');
+
                         $res_cat3 = DB::table('vendor_categories as vc')
-                        ->select('vcc.*', 'c.title as category_title')
+                        ->select('vcc.*', 'c.title as category_title', 'c.breadcrumb')
                         ->join('vendor_categories_to_categories as vcc' , 'vc.id' , 'vcc.vendor_cat_id')
                         ->join('categories as c' , 'c.category_id' , 'vcc.category_id')
                         ->where('vc.vendor_id', $vendor_id)
-                        ->where('vc.category_name', $metadata->subcategory)->groupBy('vcc.category_id')->get();
+                        ->where('vc.category_name', $metadata->subcategory)
+                        ->where('vc.category_breadcrumb' , $cat_breadcrumb)
+                        ->groupBy('vcc.category_id')->get();
 
                         foreach($res_cat3 as $cat_obj){
 
