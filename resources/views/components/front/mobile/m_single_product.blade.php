@@ -578,7 +578,7 @@
                 <span class="category-label">Category:</span>
                 @foreach ($product->categories as $key => $category)
                     <a title="{{ $category->title }}"
-                        href="{{ url("/$category->breadcrumb") }}">{{ $category->title }}</a>
+                        href="{{ url("/$category->breadcrumb") }}">{{ $category->parent_title }}&nbsp;{{ $category->title }}</a>
                     {{ array_key_last($product->categories) == $key ? '' : ',' }}
                 @endforeach
                 </span>
@@ -646,7 +646,7 @@
 
     <div class="tab-panels">
         <section id="desc" class="tab-panel">
-            {!! !empty($product->description) ? $product->description : 'No Description' !!}
+            {!! !empty($product->description) ? html_entity_decode($product->description) : 'No Description' !!}
         </section>
         <section id="more-info" class="tab-panel">
             <h2>See details: </h2>
