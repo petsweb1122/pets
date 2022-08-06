@@ -163,7 +163,7 @@ class CategoryModel extends Model
     {
         $data = array();
 
-        $top_levels = DB::table($this->table)->where('cat_level', 1)->get()->toArray();
+        $top_levels = DB::table('categories as c')->select('c.*')->join('product_categories as pc' , 'pc.category_id' , 'c.category_id')->where('cat_level', 1)->groupBy('c.category_id')->get()->toArray();
 
         foreach ($top_levels as $key => $level1) {
             $data[$key]['title'] = $level1->title;
@@ -204,7 +204,7 @@ class CategoryModel extends Model
 
         $level2_data = array();
 
-        $sec_levels = DB::table($this->table)->where('cat_1', $cat_id)->where('cat_level', 2)->get()->take(5)->toArray();
+        $sec_levels = DB::table('categories as c')->select('c.*')->join('product_categories as pc' , 'pc.category_id' , 'c.category_id')->where('cat_1', $cat_id)->where('cat_level', 2)->groupBy('c.category_id')->get()->take(5)->toArray();
         foreach ($sec_levels as $key => $level2) {
             $level2_data[$key]['title'] = $level2->title;
             $level2_data[$key]['link'] = url('/' . $level2->breadcrumb);
@@ -216,10 +216,10 @@ class CategoryModel extends Model
 
     public function getThirdLevelCat($cat_id)
     {
-
         $level3_data = array();
 
-        $third_levels = DB::table($this->table)->where('cat_2', $cat_id)->where('cat_level', 3)->get()->take(5)->toArray();
+        $third_levels =  DB::table('categories as c')->select('c.*')->join('product_categories as pc' , 'pc.category_id' , 'c.category_id')->where('cat_2', $cat_id)->where('cat_level', 3)->groupBy('c.category_id')->get()->take(5)->toArray();
+
         foreach ($third_levels as $key => $level3) {
             $level3_data[$key]['title'] = $level3->title;
             $level3_data[$key]['link'] = url('/' . $level3->breadcrumb);

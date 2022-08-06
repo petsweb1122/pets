@@ -430,7 +430,7 @@ class ProductModel extends Model
         $product->image = !empty($image->image_name)  ? url("/products/$image->folder_name/$image->image_name") : url('/img/no_image.png');
 
 
-        $cat_ids = DB::table('product_categories as pc')->select('c.category_id', 'c.title', 'c.breadcrumb')
+        $cat_ids = DB::table('product_categories as pc')->select('c.category_id', 'c.title', 'c.parent_title' ,'c.breadcrumb')
             ->join('categories as c', 'c.category_id', 'pc.category_id')
             ->where('pc.product_id', $id)->groupBy('c.category_id')->get()->toArray();
 
