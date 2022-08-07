@@ -189,7 +189,7 @@
                             <tr>
                                 <td>
                                     <span class="product-img"><img
-                                    alt="{{ $cart['name'] }}" src="{{ url($image_data[$cart['id']]['image']) }}"></span>
+                                    alt="{{ $cart['name'] }}" src="{{ url($cart->attributes->image) }}"></span>
                                 </td>
                                 <td>
                                     <span class="product-title"><a title="{{ $cart['name'] }}" href="#">{{ $cart['name'] }}</span><br>
