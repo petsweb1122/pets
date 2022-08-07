@@ -314,7 +314,7 @@
                                     <tr>
                                         <td class="remove-product"><a
                                                 href="{{url("/cart/delete-cart-data/$cart->id")}}" title="Remove Product">×</a></td>
-                                        <td class="mobile_hide"><img src="{{ url($image_data[$cart['id']]['image']) }}"  alt="Product Image">
+                                        <td class="mobile_hide"><img src="{{ url($cart->attributes->image) }}"  alt="Product Image">
                                         </td>
                                         <td class="cart-product-title"><a href="#" title="{{ $cart['name'] }}">{{ $cart['name'] }}</a>
                                         </td>
